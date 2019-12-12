@@ -40,7 +40,6 @@ class About extends Component {
     const renderLeader = ({ item, index }) => {
       return (
         <ListItem
-          key={index}
           title={item.name}
           subtitle={item.description}
           leftAvatar={{ source: { uri: baseUrl + item.image } }}

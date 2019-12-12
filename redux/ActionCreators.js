@@ -1,5 +1,6 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
+import { now } from 'moment';
 
 export const fetchComments = () => dispatch => {
   return fetch(baseUrl + 'comments')
@@ -164,4 +165,21 @@ export const postFavorite = dishId => dispatch => {
 export const addFavorite = dishId => ({
   type: ActionTypes.ADD_FAVORITE,
   payload: dishId
+});
+
+export const postComment = (dishId, rating, author, comment) => dispatch => {
+  setTimeout(() => {
+    dispatch(addComment(dishId, rating, author, comment));
+  }, 2000);
+};
+
+export const addComment = (dishId, rating, author, comment) => ({
+  type: ActionTypes.ADD_COMMENT,
+  payload: {
+    dishId,
+    rating,
+    author,
+    comment,
+    date: new Date().toISOString()
+  }
 });
