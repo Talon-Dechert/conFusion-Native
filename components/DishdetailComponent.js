@@ -40,6 +40,11 @@ function RenderDish(props) {
     else return false;
   };
 
+  const recognizeComment = ({ moveX, moveY, dx, dy }) => {
+    if (dx > 200) return true;
+    else return false;
+  };
+
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: (e, gestureState) => {
       return true;
@@ -74,6 +79,7 @@ function RenderDish(props) {
           ],
           { cancelable: false }
         );
+      else if (recognizeComment(gestureState)) props.onShowModal();
       return true;
     }
   });
@@ -184,7 +190,6 @@ class DishDetail extends Component {
       this.state.author,
       this.state.comment
     );
-    this.toggleModal();
   }
 
   resetForm() {
@@ -250,7 +255,7 @@ class DishDetail extends Component {
             </View>
             <View style={{ marginTop: 20 }}>
               <Button
-                onPress={() => this.toggleModal()}
+                onPress={() => this.resetForm()}
                 color="gray"
                 title="Cancel"
               />
