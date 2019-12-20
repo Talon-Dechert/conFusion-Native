@@ -30,23 +30,30 @@ import {
 import Reservation from './ReservationComponent';
 import Favorites from './FavoriteComponent';
 
-const LoginNavigator = createStackNavigator({
-  Login: { screen : Login }
-  },{
+const LoginNavigator = createStackNavigator(
+  {
+    Login: Login
+  },
+  {
     navigationOptions: ({ navigation }) => ({
       headerStyle: {
-       backgroundColor: '#512DA8'
+        backgroundColor: '#512DA8'
       },
       headerTitleStyle: {
         color: '#fff'
       },
+      title: 'Login',
       headerTintColor: '#fff',
-      headerLeft: <Icon name="menu" size={24}
-        color='white'
-        onPress= { () => navigation.toggleDrawer() } />
+      headerLeft: (
+        <Icon
+          name="menu"
+          size={24}
+          color="white"
+          onPress={() => navigation.toggleDrawer()}
+        />
+      )
     })
   }
-
 );
 
 const FavoritesNavigator = createStackNavigator(
@@ -268,13 +275,13 @@ const MainNavigator = createDrawerNavigator(
         title: 'Login',
         drawerLabel: 'Login',
         drawerIcon: ({ tintColor, focused }) => (
-          <Icon 
-            name='sign-in'
-            type='font-awesome'
+          <Icon
+            name="sign-in"
+            type="font-awesome"
             size={24}
             color={tintColor}
-            />
-        ),
+          />
+        )
       }
     },
     Home: {
@@ -406,4 +413,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Main);
