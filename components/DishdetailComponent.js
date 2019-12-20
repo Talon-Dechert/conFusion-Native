@@ -8,7 +8,8 @@ import {
   Modal,
   Button,
   Alert,
-  PanResponder
+  PanResponder,
+  Share
 } from 'react-native';
 import { Card, Icon, Rating, Input } from 'react-native-elements';
 import { postFavorite, postComment } from '../redux/ActionCreators';
@@ -29,6 +30,19 @@ const mapDispatchToProps = dispatch => ({
   postComment: (dishId, rating, author, comment) =>
     dispatch(postComment(dishId, rating, author, comment))
 });
+
+const shareDish = (title, message, url) => {
+  Share.share(
+    {
+      title: title,
+      message: `${title}: ${message} ${url}`,
+      url: url
+    },
+    {
+      dialogTitle: 'Share ' + title
+    }
+  );
+};
 
 function RenderDish(props) {
   const dish = props.dish;
@@ -116,6 +130,17 @@ function RenderDish(props) {
               type="font-awesome"
               color="#512DA8"
               onPress={() => props.onShowModal()}
+            />
+            <Icon
+              raised
+              reverse
+              name="share"
+              type="font-awesome"
+              color="#512DA8"
+              style={styles.cardItem}
+              onPress={() =>
+                shareDish(dish.name, dish.description, baseUrl + dish.image)
+              }
             />
           </View>
         </Card>
@@ -293,4 +318,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(DishDetail);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DishDetail);
