@@ -2074,10 +2074,10 @@ expo-location@~7.0.0:
   dependencies:
     invariant "^2.2.4"
 
-expo-mail-composer@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/expo-mail-composer/-/expo-mail-composer-8.0.0.tgz#6f7b57cc82fb4547ac0cdbe2bd3239d5eb1d5b6c"
-  integrity sha512-IB1CM/Jl8IoPce4ZDYpLAf0S89TSNwV8eytDxTR0lPV8/AC1Yf4bz+Y1fmQznWY9vJiSJ+sWSE0p3rDcdP1WkA==
+expo-mail-composer@7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/expo-mail-composer/-/expo-mail-composer-7.0.0.tgz#dcce0cc0991f546062d23fbdccb604c46d913364"
+  integrity sha512-XIfQLW61AIuxoJ2RNVmSPhE0dt68LUh2mLQ5sg6GD2Ve5aLAKvc/rRZP0nGQpti7jPS4/Ft9KyWt4e1lhkhEpA==
   dependencies:
     query-string "^6.2.0"
 
