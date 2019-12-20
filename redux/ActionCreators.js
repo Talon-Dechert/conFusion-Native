@@ -9,7 +9,7 @@ export const fetchComments = () => dispatch => {
         if (response.ok) {
           return response;
         } else {
-          var error = new Error(
+          let error = new Error(
             'Error ' + response.status + ': ' + response.statusText
           );
           error.response = response;
@@ -17,7 +17,7 @@ export const fetchComments = () => dispatch => {
         }
       },
       error => {
-        var errmess = new Error(error.message);
+        let errmess = new Error(error.message);
         throw errmess;
       }
     )
@@ -45,7 +45,7 @@ export const fetchDishes = () => dispatch => {
         if (response.ok) {
           return response;
         } else {
-          var error = new Error(
+          let error = new Error(
             'Error ' + response.status + ': ' + response.statusText
           );
           error.response = response;
@@ -53,7 +53,7 @@ export const fetchDishes = () => dispatch => {
         }
       },
       error => {
-        var errmess = new Error(error.message);
+        let errmess = new Error(error.message);
         throw errmess;
       }
     )
@@ -85,7 +85,7 @@ export const fetchPromos = () => dispatch => {
         if (response.ok) {
           return response;
         } else {
-          var error = new Error(
+          let error = new Error(
             'Error ' + response.status + ': ' + response.statusText
           );
           error.response = response;
@@ -93,7 +93,7 @@ export const fetchPromos = () => dispatch => {
         }
       },
       error => {
-        var errmess = new Error(error.message);
+        let errmess = new Error(error.message);
         throw errmess;
       }
     )
@@ -125,7 +125,7 @@ export const fetchLeaders = () => dispatch => {
         if (response.ok) {
           return response;
         } else {
-          var error = new Error(
+          let error = new Error(
             'Error ' + response.status + ': ' + response.statusText
           );
           error.response = response;
@@ -133,7 +133,7 @@ export const fetchLeaders = () => dispatch => {
         }
       },
       error => {
-        var errmess = new Error(error.message);
+        let errmess = new Error(error.message);
         throw errmess;
       }
     )
