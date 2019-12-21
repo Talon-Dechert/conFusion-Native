@@ -8,12 +8,14 @@ import {
   Switch,
   Button,
   Modal,
-  Alert
+  Alert,
+  Platform
 } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import * as Animatable from 'react-native-animatable';
 import * as Permissions from 'expo-permissions';
 import { Notifications } from 'expo';
+import * as Calendar from 'expo-calendar';
 
 class Reservation extends Component {
   constructor(props) {
@@ -28,6 +30,45 @@ class Reservation extends Component {
 
   static navigationOptions = {
     title: 'Reserve Table'
+  };
+
+  obtainCalendarPermission = async () => {
+    console.log('Obtaining permissions');
+    let calendarPermission = await Permissions.getAsync(Permissions.CALENDAR);
+    if (calendarPermission.status !== 'granted') {
+      calendarPermission = await Permissions.askAsync(Permissions.CALENDAR);
+      if (calendarPermission.status !== 'granted') {
+        Alert.alert('Calendar permission not granted');
+      }
+    }
+    return calendarPermission;
+  };
+
+  findCalendarId = async () => {
+    if (Platform.OS === 'ios') {
+      const defaultCalendar = await Calendar.getDefaultCalendarAsync();
+      return defaultCalendar.id;
+    } else {
+      const calendars = await Calendar.getCalendarsAsync();
+      console.log(calendars);
+
+      const defaultCalendar = calendars.filter(calendar => calendar.isPrimary);
+      console.log(defaultCalendar);
+      return defaultCalendar.id;
+    }
+  };
+
+  addReservationtoCalendar = async date => {
+    await this.obtainCalendarPermission();
+    const calId = await this.findCalendarId();
+    let eventId = await Calendar.createEventAsync('3', {
+      title: 'conFusion Reservation',
+      startDate: new Date(Date.parse(date)),
+      endDate: new Date(Date.parse(date) + 1000 * 60 * 60 * 2),
+      timezone: 'Asia/Hong_Kong',
+      location: '121, Clear Water Bay Road, Clear Water Bay, Kowloon, Hong Kong'
+    });
+    console.log('Calendar event ' + eventId + ' created succesfully.');
   };
 
   handleReservation() {
@@ -48,7 +89,8 @@ class Reservation extends Component {
           text: 'OK',
           onPress: () => {
             console.log('Confirmed');
-            this.presentLocalNotification(this.state.date)
+            this.presentLocalNotification(this.state.date);
+            this.addReservationtoCalendar(this.state.date);
             this.resetForm();
           }
         }
@@ -66,9 +108,13 @@ class Reservation extends Component {
   }
 
   async obtainNotificationPermission() {
-    let permission = await Permissions.getAsync(Permissions.USER_FACING_NOTIFICATIONS);
+    let permission = await Permissions.getAsync(
+      Permissions.USER_FACING_NOTIFICATIONS
+    );
     if (permission.status !== 'granted') {
-      permission = await Permissions.askAsync(Permissions.USER_FACING_NOTIFICATIONS);
+      permission = await Permissions.askAsync(
+        Permissions.USER_FACING_NOTIFICATIONS
+      );
       if (permission.status !== 'granted') {
         Alert.alert('Permission not granted to show notifications');
       }

@@ -133,7 +133,7 @@ class RegisterTab extends Component {
       lastname: '',
       email: '',
       remember: false,
-      imageUrl: `${baseUrl} images/logo.png`
+      imageUrl: baseUrl + 'images/logo.png'
     };
   }
 
@@ -154,6 +154,27 @@ class RegisterTab extends Component {
       if (!capturedImage.cancelled) {
         console.log(capturedImage);
         this.processImage(capturedImage.uri);
+      }
+    }
+  };
+
+  getImageFromGallery = async () => {
+    const cameraPermission = await Permissions.askAsync(Permissions.CAMERA);
+    const cameraRollPermission = await Permissions.askAsync(
+      Permissions.CAMERA_ROLL
+    );
+
+    if (
+      cameraPermission.status === 'granted' &&
+      cameraRollPermission.status === 'granted'
+    ) {
+      let chosenImage = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [4, 3]
+      });
+      if (!chosenImage.cancelled) {
+        console.log(chosenImage);
+        this.processImage(chosenImage.uri);
       }
     }
   };
@@ -202,7 +223,12 @@ class RegisterTab extends Component {
               loadingIndicatorSource={require('./images/logo.png')}
               style={styles.image}
             />
-            <Button title="Camera" onPress={this.getImageFromCamera} />
+            <View style={styles.button}>
+              <Button title="Camera" onPress={this.getImageFromCamera} />
+            </View>
+            <View style={styles.button}>
+              <Button title="Gallery" onPress={this.getImageFromGallery} />
+            </View>
           </View>
           <Input
             placeholder="Username"
@@ -295,6 +321,9 @@ const styles = StyleSheet.create({
   },
   formButton: {
     margin: 60
+  },
+  button: {
+    margin: 20
   }
 });
 
